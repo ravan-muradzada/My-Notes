@@ -1,2 +1,2 @@
 # My-Notes
-Just for my coding notes
+Just for noting :)
