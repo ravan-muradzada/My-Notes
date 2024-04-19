@@ -2,9 +2,7 @@
 #include <vector>
 #include <climits>
 using namespace std;
-int min(int a, int b){
-    return (a > b)? b: a;
-}
+
 int f(vector<int>& arr){
     int left = 0, right = arr.size() - 1, mid;
     int minNumber = INT_MAX;
