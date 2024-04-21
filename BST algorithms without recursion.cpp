@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <queue>
 using namespace std;
 
 class TreeNode{
@@ -39,7 +40,8 @@ public:
             prev->right = newNode;
         else prev->left = newNode;
     }
-    void inOrder(){
+    
+    void inOrder(){ // left, root, right
         if (root == nullptr) return;
         stack<TreeNode*> st;
         TreeNode* node = root;
@@ -59,32 +61,49 @@ public:
         }
         cout << endl << endl;
     }
+    
+    void preOrder(){ // root, left, right
+        stack<TreeNode*> st;
+        TreeNode* node = nullptr;
+        st.push(root);
+        while (!st.empty()){
+            node = st.top();
+            st.pop();
+            cout << node->data << " ";
+            if (node->right) st.push(node->right);
+            if (node->left) st.push(node->left);
+        }
+    }
+
+    void levelOrder(){ // level by level
+        if (root == nullptr) return;
+        queue<TreeNode*> q;
+        TreeNode* node = nullptr;
+        q.push(root);
+        int size;
+        while (!q.empty()){
+            size = q.size();
+            for (int i = 0; i < size; ++i){
+                node = q.front();
+                q.pop();
+                cout << node->data << " ";
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+            cout << "| ";
+        }
+        cout << endl;
+    }
+    
+    
 };
-void inOrderRecursion(TreeNode* tree){
-    if (tree == nullptr)  return;
-    inOrderRecursion(tree->left);
-    cout << tree->data << " ";
-    inOrderRecursion(tree->right);
-}
+
 int main(){
     BST b1;
-
-    b1.insert(7);
-    b1.insert(5);
-    b1.insert(3);
-    b1.insert(6);
-    b1.insert(1);
-    b1.insert(4);
-    b1.insert(12);
-    b1.insert(9);
-    b1.insert(15);
-    b1.insert(8);
-    b1.insert(10);
-    b1.insert(13);
-    b1.insert(17);
-    b1.inOrder();
-    inOrderRecursion(b1.Root());
-    // 1, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 17
-
+    int arr[] = {7, 5, 3, 6, 1, 4, 12, 9, 15, 8, 10, 13, 17};
+    for (int i: arr){
+        b1.insert(i);
+    }
+    b1.preOrder();
     return 0;
 }
