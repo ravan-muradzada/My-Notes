@@ -83,11 +83,6 @@ bool isSame(TreeNode*& tree_1, TreeNode*& tree_2){
            (isSame(tree_1->right, tree_2->right));
 }
 
-bool isBalanced(TreeNode*& tree){
-    if (!tree) return true;
-    int leftSide += 
-}
-
 int main(){
     BST b1, b2;
     int arr[] = {7, 5, 3, 6, 1, 4, 12, 9, 15, 8, 10, 13, 17};
