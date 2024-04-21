@@ -1,21 +1,20 @@
 #include <iostream>
 #include <stack>
 #include <queue>
-using namespace std; 
- 
+using namespace std;
+
 class TreeNode{
-public: 
+public:
     int data;
     TreeNode* left, *right;
-    TreeNode(int data): data(data) {} 
+    TreeNode(int data): data(data) {}
     TreeNode(){
         data = 0;
     }
 };
 class BST{
-private:
-    TreeNode* root;
 public:
+    TreeNode* root;
     BST(){
         root = nullptr;
     }   
@@ -40,63 +39,28 @@ public:
             prev->right = newNode;
         else prev->left = newNode;
     }
-    
-    void inOrder(){ // left, root, right
-        if (root == nullptr) return;
-        stack<TreeNode*> st;
-        TreeNode* node = root;
-
-        while (true){
-            if (node){
-                st.push(node);
-                node = node->left;
-            }else{
-                if (st.empty()) break;
-                node = st.top();
-                st.pop();
-
-                cout << node->data << " ";
-                node = node->right;
-            }
-        }
-        cout << endl << endl;
-    }
-    
-    void preOrder(){ // root, left, right
-        stack<TreeNode*> st;
-        TreeNode* node = nullptr;
-        st.push(root);
-        while (!st.empty()){
-            node = st.top();
-            st.pop();
-            cout << node->data << " ";
-            if (node->right) st.push(node->right);
-            if (node->left) st.push(node->left);
-        }
-    }
-
-    void levelOrder(){ // level by level
-        if (root == nullptr) return;
-        queue<TreeNode*> q;
-        TreeNode* node = nullptr;
-        q.push(root);
-        int size;
-        while (!q.empty()){
-            size = q.size();
-            for (int i = 0; i < size; ++i){
-                node = q.front();
-                q.pop();
-                cout << node->data << " ";
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
-            }
-            cout << "| ";
-        }
-        cout << endl;
-    }
-    
-    
 };
+
+void inOrder(TreeNode*& tree){
+    if (!tree) return;
+    inOrder(tree->left);    
+    cout << tree->data << " ";
+    inOrder(tree->right);
+}
+void preOrder(TreeNode*& tree){
+    if (!tree) return;
+    cout << tree->data << " ";
+    preOrder(tree->left);
+    preOrder(tree->right);
+}
+
+void postOrder(TreeNode*& tree){
+    if (!tree) return;
+    postOrder(tree->left);
+    postOrder(tree->right);
+    cout << tree->data << " ";
+}
+
 
 int main(){
     BST b1;
@@ -104,6 +68,6 @@ int main(){
     for (int i: arr){
         b1.insert(i);
     }
-    b1.preOrder();
+    preOrder(b1.root);
     return 0;
 }
