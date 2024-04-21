@@ -7,7 +7,7 @@ class TreeNode{
 public:
     int data;
     TreeNode* left, *right;
-    TreeNode(int data): data(data) {}
+    TreeNode(int data): data(data) {} 
     TreeNode(){
         data = 0;
     }
