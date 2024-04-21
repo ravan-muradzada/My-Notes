@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stack>
-#include <queue>
 using namespace std;
 
 class TreeNode{
@@ -18,28 +16,14 @@ public:
     BST(){
         root = nullptr;
     }   
-    TreeNode* Root(){
-        TreeNode* Temp = root;
-        return Temp;
-    }
-    void insert(int val){
-        if (root == nullptr){
-            root = new TreeNode(val);
-            return;
-        }
-        TreeNode* newNode = new TreeNode(val);
-        TreeNode* curr = root, *prev = nullptr;
-        while (curr){
-            prev = curr;
-            if (val > curr->data)
-                curr = curr->right;
-            else curr = curr->left;
-        }
-        if (val > prev->data)
-            prev->right = newNode;
-        else prev->left = newNode;
-    }
 };
+
+void insert(TreeNode*& tree, int val){
+    if (!tree) tree = new TreeNode(val);
+    else if (val > tree->data)
+        insert(tree->right, val);
+    else insert(tree->left, val);
+}
 
 void inOrder(TreeNode*& tree){
     if (!tree) return;
@@ -47,6 +31,7 @@ void inOrder(TreeNode*& tree){
     cout << tree->data << " ";
     inOrder(tree->right);
 }
+
 void preOrder(TreeNode*& tree){
     if (!tree) return;
     cout << tree->data << " ";
@@ -61,12 +46,11 @@ void postOrder(TreeNode*& tree){
     cout << tree->data << " ";
 }
 
-
 int main(){
     BST b1;
     int arr[] = {7, 5, 3, 6, 1, 4, 12, 9, 15, 8, 10, 13, 17};
     for (int i: arr){
-        b1.insert(i);
+        insert(b1.root, i);
     }
     preOrder(b1.root);
     return 0;
